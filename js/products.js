@@ -22,7 +22,7 @@ function displayProducts(products) {
         const img = document.createElement('img');
         img.src = product.image;
         img.alt = `product: ${product.title}`;
-        img.loading="lazy";
+        img.loading="lazy"; // lazy loading the image
         img.width=250;
         pictureDiv.appendChild(img);
 
@@ -66,11 +66,24 @@ function displayProducts(products) {
 }
 
 
+window.onload = () => {
+    let status = 'idle';
+    let productSection = document.querySelector("#all-products");
 
-loadProducts();
+    window.onscroll = () => {
+        let position = productSection.getBoundingClientRect().top - window.scrollY + window.innerHeight; 
+        if (status= 'idle' && position <= 0) {
+            status = 'fetching'
+            loadProducts();
 
-// Simulate heavy operation. It could be a complex price calculation.
-for (let i = 0; i < 10000000; i++) {
-    const temp = Math.sqrt(i) * Math.sqrt(i);
+            // Simulate heavy operation. It could be a complex price calculation.
+            for (let i = 0; i < 100000000; i++) {
+                const temp = Math.sqrt(i) * Math.sqrt(i);
+            }
+        }
+    };
+
+    
 }
+
 
